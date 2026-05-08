@@ -1,0 +1,13 @@
+# Dependencies & build output
+node_modules/
+dist/
+
+# Tooling cache
+*.tsbuildinfo
+
+# Local env (never commit secrets)
+.env
+.env.*.local
+
+# OS
+.DS_Store
