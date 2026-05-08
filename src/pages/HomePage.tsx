@@ -57,15 +57,13 @@ export default function HomePage() {
     resolver: zodResolver(contactSchema),
   })
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async (_data: ContactFormData) => {
     setIsSubmitting(true)
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      console.log('Form data:', data)
+      await new Promise((resolve) => setTimeout(resolve, 1000))
       toast.success('Message sent successfully! I\'ll get back to you soon.')
       reset()
-    } catch (error) {
+    } catch {
       toast.error('Failed to send message. Please try again.')
     } finally {
       setIsSubmitting(false)
@@ -85,15 +83,34 @@ export default function HomePage() {
             >
               Alex Developer
             </motion.div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#about" className="hover:text-primary transition-colors">About</a>
-              <a href="#projects" className="hover:text-primary transition-colors">Projects</a>
-              <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
+            <nav
+              className="flex flex-wrap items-center justify-end gap-4 sm:gap-8 text-sm sm:text-base"
+              aria-label="Primary"
+            >
+              <a
+                href="#about"
+                className="rounded-md px-1 py-0.5 text-foreground underline-offset-4 hover:text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+              >
+                About
+              </a>
+              <a
+                href="#projects"
+                className="rounded-md px-1 py-0.5 text-foreground underline-offset-4 hover:text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+              >
+                Projects
+              </a>
+              <a
+                href="#contact"
+                className="rounded-md px-1 py-0.5 text-foreground underline-offset-4 hover:text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+              >
+                Contact
+              </a>
             </nav>
           </div>
         </div>
       </header>
 
+      <main id="main-content" className="scroll-mt-24" tabIndex={-1}>
       {/* Hero Section */}
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
@@ -124,23 +141,23 @@ export default function HomePage() {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
                 aria-label="GitHub Profile"
               >
                 <Github className="w-6 h-6" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin className="w-6 h-6" />
               </a>
               <a
                 href="mailto:alex@example.com"
-                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+                className="p-3 rounded-full bg-muted hover:bg-muted/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
                 aria-label="Email Contact"
               >
                 <Mail className="w-6 h-6" />
@@ -225,7 +242,8 @@ export default function HomePage() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-sm hover:text-primary transition-colors"
+                      aria-label={`View ${project.title} source on GitHub`}
+                      className="flex items-center space-x-1 text-sm hover:text-primary transition-colors rounded-md px-1 py-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
                     >
                       <Github className="w-4 h-4" />
                       <span>Code</span>
@@ -234,7 +252,8 @@ export default function HomePage() {
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-sm hover:text-primary transition-colors"
+                      aria-label={`Open live demo for ${project.title}`}
+                      className="flex items-center space-x-1 text-sm hover:text-primary transition-colors rounded-md px-1 py-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
                     >
                       <ExternalLink className="w-4 h-4" />
                       <span>Demo</span>
@@ -279,6 +298,7 @@ export default function HomePage() {
                 {...register('name')}
                 type="text"
                 id="name"
+                autoComplete="name"
                 className={cn(
                   'w-full px-4 py-3 rounded-lg border bg-input focus:ring-2 focus:ring-ring focus:border-transparent transition-colors',
                   errors.name && 'border-destructive'
@@ -298,6 +318,7 @@ export default function HomePage() {
                 {...register('email')}
                 type="email"
                 id="email"
+                autoComplete="email"
                 className={cn(
                   'w-full px-4 py-3 rounded-lg border bg-input focus:ring-2 focus:ring-ring focus:border-transparent transition-colors',
                   errors.email && 'border-destructive'
@@ -331,8 +352,9 @@ export default function HomePage() {
             <button
               type="submit"
               disabled={isSubmitting}
+              aria-busy={isSubmitting}
               className={cn(
-                'w-full bg-primary text-primary-foreground py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2',
+                'w-full bg-primary text-primary-foreground py-3 px-6 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
                 isSubmitting
                   ? 'opacity-50 cursor-not-allowed'
                   : 'hover:bg-primary/90'
@@ -350,12 +372,13 @@ export default function HomePage() {
           </motion.form>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="py-8 px-4 sm:px-6 lg:px-8 border-t border-border">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-muted-foreground">
-            © 2024 Alex Developer. Built with React, TypeScript, and Tailwind CSS.
+            © {new Date().getFullYear()} Alex Developer. Built with React, TypeScript, and Tailwind CSS.
           </p>
         </div>
       </footer>
