@@ -9,6 +9,9 @@ import 'react-toastify/dist/ReactToastify.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <App />
       <ToastContainer
         position="top-right"
